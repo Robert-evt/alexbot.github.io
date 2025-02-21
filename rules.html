@@ -27,7 +27,6 @@
     .disabled { background-color: grey; color: white; cursor: not-allowed; }
     .enabled { background-color: #007BFF; color: white; cursor: pointer; }
     .note { margin-top: 10px; font-size: 14px; color: #555; }
-    .info { margin-top: 20px; font-size: 16px; color: #333; }
   </style>
 </head>
 <body>
@@ -49,11 +48,8 @@
     </label>
     <br><br>
     <button id="continue" class="button disabled" disabled>Далее</button>
-    <p class="note">После нажатия кнопки данные отправятся в бота и произойдет переход.</p>
+    <p class="note">После нажатия кнопки данные отправятся в бота.</p>
   </div>
-  
-  <!-- Отображение полученных параметров -->
-  <div id="paramsDisplay" class="info"></div>
 
   <script>
     // Функция для получения параметров из URL
@@ -65,11 +61,6 @@
     // Получаем chat-id и link из URL
     const chatId = getQueryParam("chat-id");
     const inviteLink = getQueryParam("link");
-    console.log("chat-id:", chatId, "inviteLink:", inviteLink);
-
-    // Отображаем полученные параметры (если нужно)
-    document.getElementById("paramsDisplay").innerText =
-      "Ваш chat-id: " + chatId + "\nСсылка приглашения: " + inviteLink;
 
     const agreeCheckbox = document.getElementById("agree");
     const continueButton = document.getElementById("continue");
@@ -87,17 +78,17 @@
     });
 
     continueButton.addEventListener("click", () => {
-      // Отправляем сообщение с ссылкой приглашения
+      // Отправляем ссылку-приглашение пользователю через бота
       const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs'; // Токен бота
-      const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(inviteLink)}`;
+      const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=Поздравляем! Ваша ссылка для вступления: ${encodeURIComponent(inviteLink)}`;
 
       fetch(sendUrl)
         .then(response => response.json())
         .then(data => console.log("Ответ:", data))
         .catch(error => console.error("Ошибка:", error));
 
-      // Переход на страницу welcome
-      window.location.href = "http://3d.evtifeev.com/boba/AlexBot/welcome.html";
+      // После отправки можно закрыть WebApp
+      window.Telegram.WebApp.close();
     });
   </script>
 
