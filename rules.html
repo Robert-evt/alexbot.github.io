@@ -66,16 +66,17 @@
         continueButton.disabled = true;
       }
     });
-    
-continueButton.addEventListener("click", () => {
-  if (window.Telegram && window.Telegram.WebApp) {
-    window.Telegram.WebApp.sendData("Next");
-  }
-  // Небольшая задержка перед переходом (например, 500 мс)
-  setTimeout(() => {
-    window.location.href = "http://3d.evtifeev.com/boba/AlexBot/welcome.html";
-  }, 500);
-});
+
+    continueButton.addEventListener("click", () => {
+      // Отправка данных в Telegram Web App
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.sendData("Next");
+      }
+      // Задержка перед переходом, чтобы данные успели отправиться
+      setTimeout(() => {
+        window.location.href = "http://3d.evtifeev.com/boba/AlexBot/welcome.html";
+      }, 500);
+    });
   </script>
 
 </body>
