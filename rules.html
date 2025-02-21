@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Правила группы</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; text-align: center; }
+    h1 { text-align: center; }
+    .rules { 
+      font-size: 18px; 
+      line-height: 1.6; 
+      text-align: center; 
+      display: inline-block; 
+    }
+    .bold { font-weight: bold; }
+    .footer { margin-top: 20px; }
+    #agree { margin-right: 10px; }
+    .button { 
+      padding: 10px 20px; 
+      font-size: 16px; 
+      cursor: pointer; 
+      border: none; 
+      border-radius: 5px; 
+      width: 150px;
+    }
+    .disabled { background-color: grey; color: white; cursor: not-allowed; }
+    .enabled { background-color: #007BFF; color: white; cursor: pointer; }
+    .note { margin-top: 10px; font-size: 14px; color: #555; }
+  </style>
+</head>
+<body>
+
+  <h1>📜 Правила группы:</h1>
+  
+  <div class="rules">
+    <p>Добро пожаловать в нашу группу! Пожалуйста, ознакомьтесь с правилами.</p>
+    <p>🚫 <span class="bold">Запрещено:</span></p>
+    <p>- Оскорбления, спам, реклама.</p>
+    <p>- Использование матерных слов.</p>
+    <p>- Повторное нарушение правил: <br>
+       <span class="bold">У каждого участника есть 2 "жизни" – первый раз прощается, второй раз запрещается.</span></p>
+  </div>
+  
+  <div class="footer">
+    <label>
+      <input type="checkbox" id="agree"> Я принимаю правила
+    </label>
+    <br><br>
+    <button id="continue" class="button disabled" disabled>Далее</button>
+    <p class="note">После нажатия кнопки данные отправятся в бота и произойдет переход.</p>
+  </div>
+
+  <script>
+    const agreeCheckbox = document.getElementById("agree");
+    const continueButton = document.getElementById("continue");
+
+    agreeCheckbox.addEventListener("change", () => {
+      if (agreeCheckbox.checked) {
+        continueButton.classList.remove("disabled");
+        continueButton.classList.add("enabled");
+        continueButton.disabled = false;
+      } else {
+        continueButton.classList.remove("enabled");
+        continueButton.classList.add("disabled");
+        continueButton.disabled = true;
+      }
+    });
+
+    continueButton.addEventListener("click", () => {
+      // Отправка данных в Telegram Web App
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.sendData("Next");
+      }
+
+      // Переход по ссылке
+      window.location.href = "http://3d.evtifeev.com/boba/AlexBot/welcome.html";
+    });
+  </script>
+
+</body>
+</html>
