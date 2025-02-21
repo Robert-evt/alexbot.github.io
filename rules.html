@@ -68,17 +68,18 @@
     });
 
     continueButton.addEventListener("click", () => {
-      // Отправка данных в Telegram бота
-      const botToken = "7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs"; // Вставьте токен вашего бота
-      const chatId = "5280003496"; // Вставьте chat_id пользователя
-      const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=next`;
+      // Получение chat_id пользователя из WebApp
+      const userChatId = Telegram.WebApp.initDataUnsafe.user.id; // Извлекаем chat_id
+      const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs'; // Вставьте токен вашего бота
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${userChatId}&text=Привет!!`;
 
+      // Отправка данных в Telegram API
       fetch(url)
         .then(response => response.json())
         .then(data => console.log("Ответ:", data))
         .catch(error => console.error("Ошибка:", error));
 
-      // Переход на следующий шаг
+      // Переход на следующую страницу
       window.location.href = "http://3d.evtifeev.com/boba/AlexBot/welcome.html";
     });
   </script>
