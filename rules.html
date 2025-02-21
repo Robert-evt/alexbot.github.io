@@ -27,7 +27,7 @@
     .disabled { background-color: grey; color: white; cursor: not-allowed; }
     .enabled { background-color: #007BFF; color: white; cursor: pointer; }
     .note { margin-top: 10px; font-size: 14px; color: #555; }
-    .key-info { margin-top: 20px; font-size: 16px; color: #333; }
+    .info { margin-top: 20px; font-size: 16px; color: #333; }
   </style>
 </head>
 <body>
@@ -52,23 +52,24 @@
     <p class="note">После нажатия кнопки данные отправятся в бота и произойдет переход.</p>
   </div>
   
-  <div id="chatIdDisplay" class="key-info"></div>
+  <!-- Отображение полученных параметров -->
+  <div id="paramsDisplay" class="info"></div>
 
   <script>
-    // Функция для получения параметра из URL
+    // Функция для получения параметров из URL
     function getQueryParam(param) {
       const params = new URLSearchParams(window.location.search);
       return params.get(param);
     }
 
-    // Получаем chat-id из URL
+    // Получаем chat-id и link из URL
     const chatId = getQueryParam("chat-id");
-    console.log("Полученный chat-id:", chatId);
+    const inviteLink = getQueryParam("link");
+    console.log("chat-id:", chatId, "inviteLink:", inviteLink);
 
-    // Если нужно, отображаем chat-id на странице
-    if (chatId) {
-      document.getElementById("chatIdDisplay").innerText = "Ваш chat-id: " + chatId;
-    }
+    // Отображаем полученные параметры (если нужно)
+    document.getElementById("paramsDisplay").innerText =
+      "Ваш chat-id: " + chatId + "\nСсылка приглашения: " + inviteLink;
 
     const agreeCheckbox = document.getElementById("agree");
     const continueButton = document.getElementById("continue");
@@ -86,16 +87,16 @@
     });
 
     continueButton.addEventListener("click", () => {
-      const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs'; // Ваш токен
-      // Здесь отправляем сообщение со ссылкой
-      const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=https://t.me/+HWDYLJKSwro4NTUy`;
+      // Отправляем сообщение с ссылкой приглашения
+      const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs'; // Токен бота
+      const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(inviteLink)}`;
 
       fetch(sendUrl)
         .then(response => response.json())
         .then(data => console.log("Ответ:", data))
         .catch(error => console.error("Ошибка:", error));
 
-      // Переход на страницу приветствия
+      // Переход на страницу welcome
       window.location.href = "http://3d.evtifeev.com/boba/AlexBot/welcome.html";
     });
   </script>
