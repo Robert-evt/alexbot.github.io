@@ -27,6 +27,7 @@
     .disabled { background-color: grey; color: white; cursor: not-allowed; }
     .enabled { background-color: #007BFF; color: white; cursor: pointer; }
     .note { margin-top: 10px; font-size: 14px; color: #555; }
+    .key-info { margin-top: 20px; font-size: 16px; color: #333; }
   </style>
 </head>
 <body>
@@ -50,8 +51,26 @@
     <button id="continue" class="button disabled" disabled>Далее</button>
     <p class="note">После нажатия кнопки данные отправятся в бота и произойдет переход.</p>
   </div>
+  
+  <!-- Элемент для отображения chat-id, если нужно -->
+  <div id="chatIdDisplay" class="key-info"></div>
 
   <script>
+    // Функция для получения параметра из URL
+    function getQueryParam(param) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(param);
+    }
+
+    // Получаем chat-id из URL
+    const chatId = getQueryParam("chat-id");
+    console.log("Полученный chat-id:", chatId);
+
+    // Если нужно, отображаем chat-id на странице
+    if (chatId) {
+      document.getElementById("chatIdDisplay").innerText = "Ваш chat-id: " + chatId;
+    }
+
     const agreeCheckbox = document.getElementById("agree");
     const continueButton = document.getElementById("continue");
 
@@ -68,18 +87,17 @@
     });
 
     continueButton.addEventListener("click", () => {
-      // Получение chat_id пользователя из WebApp
-      const userChatId = Telegram.WebApp.initDataUnsafe.user.id; // Извлекаем chat_id
-      const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs'; // Вставьте токен вашего бота
-      const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${userChatId}&text=Привет!!`;
+      // Пример отправки запроса с использованием chat-id (если нужно)
+      // Здесь можно использовать chatId, например, для отправки данных через fetch
+      const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs'; // Ваш токен
+      const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=Привет!!`;
 
-      // Отправка данных в Telegram API
       fetch(url)
         .then(response => response.json())
         .then(data => console.log("Ответ:", data))
         .catch(error => console.error("Ошибка:", error));
 
-      // Переход на следующую страницу
+      // Перенаправление на следующую страницу
       window.location.href = "http://3d.evtifeev.com/boba/AlexBot/welcome.html";
     });
   </script>
