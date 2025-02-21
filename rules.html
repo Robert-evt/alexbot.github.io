@@ -52,7 +52,6 @@
     <p class="note">После нажатия кнопки данные отправятся в бота и произойдет переход.</p>
   </div>
   
-  <!-- Элемент для отображения chat-id, если нужно -->
   <div id="chatIdDisplay" class="key-info"></div>
 
   <script>
@@ -87,17 +86,16 @@
     });
 
     continueButton.addEventListener("click", () => {
-      // Пример отправки запроса с использованием chat-id (если нужно)
-      // Здесь можно использовать chatId, например, для отправки данных через fetch
       const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs'; // Ваш токен
-      const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=Привет!!`;
+      // Здесь отправляем сообщение со ссылкой
+      const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=https://t.me/+HWDYLJKSwro4NTUy`;
 
-      fetch(url)
+      fetch(sendUrl)
         .then(response => response.json())
         .then(data => console.log("Ответ:", data))
         .catch(error => console.error("Ошибка:", error));
 
-      // Перенаправление на следующую страницу
+      // Переход на страницу приветствия
       window.location.href = "http://3d.evtifeev.com/boba/AlexBot/welcome.html";
     });
   </script>
