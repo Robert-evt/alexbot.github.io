@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+@Alex_evtifeev_D <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -77,9 +77,9 @@
 
     continueButton.addEventListener("click", () => {
       // Формируем сообщение с Markdown-разметкой
-      const messageText = `Поздравляем! Ваша ссылка для вступления: [нажмите здесь](${inviteLink})\n\nЕсли возникли проблемы, напишите администратору @Alex\\_evtifeev\\_D`;
+      const messageText = Поздравляем! Ваша ссылка для вступления: [нажмите здесь](${inviteLink});
       const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs';
-      const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=Markdown`;
+      const sendUrl = https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=Markdown;
       
       fetch(sendUrl)
         .then(response => response.json())
