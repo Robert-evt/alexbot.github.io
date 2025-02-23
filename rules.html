@@ -79,21 +79,23 @@
       // Формируем сообщение с Markdown-разметкой
       const messageText = `Поздравляем! Ваша ссылка для вступления: [нажмите здесь](${inviteLink})`;
       const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs';
-      const sendUrl = https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=Markdown;
+      const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=Markdown`;
       
       fetch(sendUrl)
         .then(response => response.json())
         .then(data => {
           console.log("Ответ:", data);
-          // После отправки сообщения, ждем 1 секунду и перенаправляем пользователя
+          // После отправки сообщения, ждем 500 мс и перенаправляем пользователя
           setTimeout(() => {
             window.location.href = "http://3d.evtifeev.com/boba/AlexBot/welcome.html";
           }, 500);
         })
         .catch(error => console.error("Ошибка:", error));
       
-      // Закрываем WebApp (если требуется)
-      window.Telegram.WebApp.close();
+      // Если приложение открыто внутри Telegram, можно закрыть его.
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.close();
+      }
     });
   </script>
 
