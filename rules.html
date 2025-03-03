@@ -58,6 +58,14 @@
     const chatId = getQueryParam("chat-id");
     let inviteLink = getQueryParam("link");
 
+    // Функция для замены %20 на + в ссылке
+    function formatLink(link) {
+      return link.replace(/%20/g, '+');
+    }
+
+    // Форматируем ссылку перед использованием
+    inviteLink = formatLink(inviteLink);
+
     const agreeCheckbox = document.getElementById("agree");
     const continueButton = document.getElementById("continue");
 
@@ -74,7 +82,6 @@
     });
 
     continueButton.addEventListener("click", () => {
-      // Ссылка теперь будет отображаться как "Нажмите здесь"
       const messageText = `Поздравляем! Ваша ссылка для вступления: <a href="${inviteLink}">Нажмите здесь</a>`;
       const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs';
       const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=HTML`;
