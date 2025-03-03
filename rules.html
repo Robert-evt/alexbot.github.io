@@ -31,7 +31,7 @@
 </head>
 <body>
 
-  <h1>📜 Правила группы:</h1>
+  <h1>📝 Правила группы:</h1>
   
   <div class="rules">
     <p>Добро пожаловать в нашу группу! Пожалуйста, ознакомьтесь с правилами:</p>
@@ -50,15 +50,13 @@
   </div>
 
   <script>
-    // Функция для получения параметра из URL
     function getQueryParam(param) {
       const params = new URLSearchParams(window.location.search);
       return params.get(param);
     }
 
-    // Получаем chat-id и link из URL
     const chatId = getQueryParam("chat-id");
-    const inviteLink = getQueryParam("link");
+    let inviteLink = getQueryParam("link");
 
     const agreeCheckbox = document.getElementById("agree");
     const continueButton = document.getElementById("continue");
@@ -75,36 +73,35 @@
       }
     });
 
-continueButton.addEventListener("click", () => {
-  // Экранирование специальных символов
-  function escapeMarkdown(text) {
-    return text.replace(/[_*[\]()~`>#+-=|{}.!]/g, "\\$&");
-  }
+    continueButton.addEventListener("click", () => {
+      function escapeMarkdown(text) {
+        return text.replace(/[_*\[\]()~`>#+-=|{}.!]/g, "\\$&");
+      }
 
- function cleanLink(link) {
-  return link.replace(/^%20|%20$/g, ""); // Убираем пробелы в начале и в конце
-}
+      function cleanLink(link) {
+        return link.replace(/^%20|%20$/g, "").replace(/%20/g, "+");
+      }
 
-const cleanedLink = cleanLink(inviteLink);
-const escapedLink = escapeMarkdown(cleanedLink);
-const messageText = `Поздравляем\\! Ваша ссылка для вступления: [нажмите здесь](${escapedLink})`;
-const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs';
-const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=MarkdownV2`;
+      const cleanedLink = cleanLink(inviteLink);
+      const escapedLink = escapeMarkdown(cleanedLink);
+      const messageText = `Поздравляем\\! Ваша ссылка для вступления: [нажмите здесь](${escapedLink})`;
+      const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs';
+      const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=MarkdownV2`;
 
-  fetch(sendUrl)
-    .then(response => response.json())
-    .then(data => {
-      console.log("Ответ:", data);
-      setTimeout(() => {
-        window.location.href = "http://3d.evtifeev.com/boba/AlexBot/welcome.html";
-      }, 500);
-    })
-    .catch(error => console.error("Ошибка:", error));
+      fetch(sendUrl)
+        .then(response => response.json())
+        .then(data => {
+          console.log("Ответ:", data);
+          setTimeout(() => {
+            window.location.href = "http://3d.evtifeev.com/boba/AlexBot/welcome.html";
+          }, 500);
+        })
+        .catch(error => console.error("Ошибка:", error));
 
-  if (window.Telegram && window.Telegram.WebApp) {
-    window.Telegram.WebApp.close();
-  }
-});
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.close();
+      }
+    });
   </script>
 
 </body>
