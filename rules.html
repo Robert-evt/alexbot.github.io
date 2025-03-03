@@ -57,14 +57,7 @@
 
     let inviteLink = getQueryParam("link");
 
-    // Функция для замены %20 на + в ссылке
-    function formatLink(link) {
-      return link.replace(/%20/g, '+');
-    }
-
-    // Форматируем ссылку перед использованием
-    inviteLink = formatLink(inviteLink);
-
+    // Используем ссылку как есть, без изменений
     const agreeCheckbox = document.getElementById("agree");
     const continueButton = document.getElementById("continue");
 
@@ -81,7 +74,7 @@
     });
 
     continueButton.addEventListener("click", () => {
-      // Перенаправляем пользователя по ссылке приглашения
+      // Перенаправляем пользователя по оригинальной ссылке, включая пробелы
       window.location.href = inviteLink;
     });
   </script>
