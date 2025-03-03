@@ -46,7 +46,7 @@
     </label>
     <br><br>
     <button id="continue" class="button disabled" disabled>Далее</button>
-    <p class="note">После нажатия кнопки данные отправятся в бота, а затем вы перейдете на страницу приветствия.</p>
+    <p class="note">После нажатия кнопки вы будете перенаправлены по вашей ссылке приглашения.</p>
   </div>
 
   <script>
@@ -55,7 +55,6 @@
       return params.get(param);
     }
 
-    const chatId = getQueryParam("chat-id");
     let inviteLink = getQueryParam("link");
 
     // Функция для замены %20 на + в ссылке
@@ -82,25 +81,8 @@
     });
 
     continueButton.addEventListener("click", () => {
-      // Создание текста с ссылкой в формате Markdown
-      const messageText = `Поздравляем! Ваша ссылка для вступления: [нажмите здесь](${inviteLink})`;
-
-      const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs';
-      const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=Markdown`;
-
-      fetch(sendUrl)
-        .then(response => response.json())
-        .then(data => {
-          console.log("Ответ:", data);
-          setTimeout(() => {
-            window.location.href = "http://3d.evtifeev.com/boba/AlexBot/welcome.html";
-          }, 500);
-        })
-        .catch(error => console.error("Ошибка:", error));
-
-      if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.close();
-      }
+      // Перенаправляем пользователя по ссылке приглашения
+      window.location.href = inviteLink;
     });
   </script>
 
