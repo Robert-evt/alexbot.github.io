@@ -82,9 +82,11 @@
     });
 
     continueButton.addEventListener("click", () => {
-      const messageText = `Поздравляем! Ваша ссылка для вступления: <a href="${inviteLink}">Нажмите здесь</a>`;
+      // Создание текста с ссылкой в формате Markdown
+      const messageText = `Поздравляем! Ваша ссылка для вступления: [нажмите здесь](${inviteLink})`;
+
       const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs';
-      const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=HTML`;
+      const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=Markdown`;
 
       fetch(sendUrl)
         .then(response => response.json())
