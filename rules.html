@@ -81,10 +81,15 @@ continueButton.addEventListener("click", () => {
     return text.replace(/[_*[\]()~`>#+-=|{}.!]/g, "\\$&");
   }
 
-  const escapedLink = escapeMarkdown(inviteLink);
-  const messageText = `Поздравляем\\! Ваша ссылка для вступления: [нажмите здесь](${escapedLink})`;
-  const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs';
-  const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=MarkdownV2`;
+ function cleanLink(link) {
+  return link.replace(/^%20|%20$/g, ""); // Убираем пробелы в начале и в конце
+}
+
+const cleanedLink = cleanLink(inviteLink);
+const escapedLink = escapeMarkdown(cleanedLink);
+const messageText = `Поздравляем\\! Ваша ссылка для вступления: [нажмите здесь](${escapedLink})`;
+const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs';
+const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=MarkdownV2`;
 
   fetch(sendUrl)
     .then(response => response.json())
