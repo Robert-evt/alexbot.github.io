@@ -74,13 +74,9 @@
     });
 
     continueButton.addEventListener("click", () => {
-      function escapeMarkdown(text) {
-        return text.replace(/[_*\[\]()~`>#+-=|{}.!]/g, "\\$&");
-      }
-
-      const messageText = `Поздравляем! Ваша ссылка для вступления: [нажмите здесь](${inviteLink})`;
+      const messageText = `Поздравляем! Ваша ссылка для вступления: ${inviteLink}`;
       const botToken = '7780630439:AAGBBCX6CfDUq2j_ptneds_Qcn4cC7qbBAs';
-      const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=MarkdownV2`;
+      const sendUrl = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(messageText)}&parse_mode=HTML`;
 
       fetch(sendUrl)
         .then(response => response.json())
