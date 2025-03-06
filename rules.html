@@ -31,7 +31,7 @@
 </head>
 <body>
 
-  <h1> 📜 Правила группы:</h1>
+  <h1 id="inviteLink"> 📜 Правила группы:</h1>
   
   <div class="rules">
     <p>Добро пожаловать в нашу группу! Пожалуйста, ознакомьтесь с правилами:</p>
@@ -55,9 +55,11 @@
       return params.get(param);
     }
 
-    let inviteLink = getQueryParam("link");
+    let inviteKey = getQueryParam("link");
+    let inviteURL = `https://robert-evt.github.io/alexbot.github.io/link.html?link=${inviteKey}`;
 
-    // Используем ссылку как есть, без изменений
+    document.getElementById("inviteLink").textContent = inviteURL;
+
     const agreeCheckbox = document.getElementById("agree");
     const continueButton = document.getElementById("continue");
 
@@ -74,8 +76,7 @@
     });
 
     continueButton.addEventListener("click", () => {
-      // Перенаправляем пользователя по оригинальной ссылке, включая пробелы
-      window.location.href = inviteLink;
+      window.location.href = inviteURL;
     });
   </script>
 
