@@ -1,1 +1,30 @@
-Hello World!!
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ссылка</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    h1 a { text-decoration: none; color: #007BFF; }
+    h1 a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1><a id="inviteLink" href="#">Нажмите здесь, чтобы перейти</a></h1>
+
+  <script>
+    function getQueryParam(param) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(param);
+    }
+
+    let inviteLink = getQueryParam("link");
+    if (inviteLink) {
+      const linkElement = document.getElementById("inviteLink");
+      linkElement.href = inviteLink;
+      linkElement.textContent = inviteLink;
+    }
+  </script>
+</body>
+</html>
